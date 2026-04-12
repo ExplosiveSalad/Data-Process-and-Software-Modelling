@@ -1,0 +1,14 @@
+C:\Users\yaaco\PATBMS\bin\Debug\net9.0\PATBMS.exe
+C:\Users\yaaco\PATBMS\bin\Debug\net9.0\PATBMS.deps.json
+C:\Users\yaaco\PATBMS\bin\Debug\net9.0\PATBMS.runtimeconfig.json
+C:\Users\yaaco\PATBMS\bin\Debug\net9.0\PATBMS.dll
+C:\Users\yaaco\PATBMS\bin\Debug\net9.0\PATBMS.pdb
+C:\Users\yaaco\PATBMS\obj\Debug\net9.0\PATBMS.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\yaaco\PATBMS\obj\Debug\net9.0\PATBMS.AssemblyInfoInputs.cache
+C:\Users\yaaco\PATBMS\obj\Debug\net9.0\PATBMS.AssemblyInfo.cs
+C:\Users\yaaco\PATBMS\obj\Debug\net9.0\PATBMS.csproj.CoreCompileInputs.cache
+C:\Users\yaaco\PATBMS\obj\Debug\net9.0\PATBMS.dll
+C:\Users\yaaco\PATBMS\obj\Debug\net9.0\refint\PATBMS.dll
+C:\Users\yaaco\PATBMS\obj\Debug\net9.0\PATBMS.pdb
+C:\Users\yaaco\PATBMS\obj\Debug\net9.0\PATBMS.genruntimeconfig.cache
+C:\Users\yaaco\PATBMS\obj\Debug\net9.0\ref\PATBMS.dll
