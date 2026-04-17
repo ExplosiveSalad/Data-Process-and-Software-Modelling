@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "bPKC3gFx6XI=",
+  "dgSpecHash": "0Ng+q5ycBnU=",
   "success": true,
-  "projectFilePath": "C:\\Users\\yaaco\\PATBMS\\PATBMS.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\yaaco\\Documents\\GitHub\\Data-Process-and-Software-Modelling\\PATBMS\\PATBMS.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\yaaco\\.nuget\\packages\\microsoft.netcore.app.ref\\9.0.15\\microsoft.netcore.app.ref.9.0.15.nupkg.sha512",
+    "C:\\Users\\yaaco\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\9.0.15\\microsoft.windowsdesktop.app.ref.9.0.15.nupkg.sha512",
+    "C:\\Users\\yaaco\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\9.0.15\\microsoft.aspnetcore.app.ref.9.0.15.nupkg.sha512",
+    "C:\\Users\\yaaco\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\9.0.15\\microsoft.netcore.app.host.win-x64.9.0.15.nupkg.sha512"
+  ],
   "logs": []
 }

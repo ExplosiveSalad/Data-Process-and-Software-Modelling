@@ -43,11 +43,11 @@ public class User
     public User(string userID, string name, string email, string password, string role)
         {
             //each parameter is assigned its field here
-            UserID = userID;
-            Name = name;
-            Email = email;
-            Password = password;
-            Role = role;
+            this.userID = userID;
+            this.name = name;
+            this.email = email;
+            this.password = password;
+            this.role = role;
         }
     //Methods
     public void Login()
