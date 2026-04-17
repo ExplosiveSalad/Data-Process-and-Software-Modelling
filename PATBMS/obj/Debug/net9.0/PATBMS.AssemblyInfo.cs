@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PATBMS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7c1d13eb420dcda947db477e8412789892814bde")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a73964e89a19f25ef3429b4ba17298a5fb58badb")]
 [assembly: System.Reflection.AssemblyProductAttribute("PATBMS")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PATBMS")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
