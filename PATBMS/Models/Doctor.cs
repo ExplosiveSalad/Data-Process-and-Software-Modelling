@@ -23,6 +23,7 @@ namespace PATBMS.Models
 
         public void AuthoriseAdmission()
         {
+            //Role-based access control enforcement will be implemented in Part 2
             Console.WriteLine("Dr. " + Name + " has authorised patient admission.");
         }
 

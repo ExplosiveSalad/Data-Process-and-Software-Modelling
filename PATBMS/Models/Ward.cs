@@ -52,6 +52,7 @@ namespace PATBMS.Models
 
         public float GetOccupancyRate()
         {
+            //Real time dashboard integration will be implemented in Part 2
             if (totalBeds == 0) return 0;
             return ((float)(totalBeds - GetAvailableBeds())/ totalBeds) * 100;
         }

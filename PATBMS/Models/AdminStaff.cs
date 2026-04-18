@@ -22,6 +22,7 @@ namespace PATBMS.Models
 
         public void SearchPatientByNHI()
         {
+            //NHI database integration with the National Health Index will be implemented in Part 2
             Console.WriteLine("Staff Member " + Name + " searched for a Patient.");
         }
 

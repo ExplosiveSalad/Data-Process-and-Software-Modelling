@@ -52,6 +52,7 @@ public class User
     //Methods
     public void Login()
         {
+            //Full authentication with credential verification will be implemented in Part 2
             Console.WriteLine("Welcome to the PATBMS, " + Name + "!");
         }
     

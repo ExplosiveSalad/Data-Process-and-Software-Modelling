@@ -37,6 +37,7 @@ namespace PATBMS.Models
         }
         public void SendNotification()
         {
+            //Automated 30-minute alert system as per NFR6 to be implemented in Part 2
             Console.WriteLine($"=== NEW NOTIFICATION ===");
             Console.WriteLine($"Notification ID: {notificationID}");
             Console.WriteLine($"Message: {message}");
