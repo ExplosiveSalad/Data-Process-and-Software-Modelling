@@ -71,28 +71,35 @@ class Program
 
                 case "3":
                 if (patient == null)
-                    {
-                        Console.WriteLine("No patient registered. Please register a patient first.");
-                        break;
-                    }
-                    Console.WriteLine("\n=== PERFORM TRIAGE ===");
-                    Console.Write("Enter patient symptoms: ");
-                    string symptoms = Console.ReadLine() ?? "";
-                    Console.Write("Enter patient vitals (e.g. BP 120/80): ");
-                    string vitals = Console.ReadLine() ?? "";
-                    Console.Write("Enter ATS Category (1-5): ");
-                    string atsInput = Console.ReadLine() ?? "";
-                    int atsCategory = int.Parse(atsInput);
+                {
+                 Console.WriteLine("No patient registered. Please register a patient first.");
+                break;
+                }
+                Console.WriteLine("\n=== PERFORM TRIAGE ===");
+                Console.Write("Enter patient symptoms: ");
+                string symptoms = Console.ReadLine() ?? "";
+                Console.Write("Enter patient vitals (e.g. BP 120/80): ");
+                string vitals = Console.ReadLine() ?? "";
+                Console.Write("Enter ATS Category (1-5): ");
+                string atsInput = Console.ReadLine() ?? "";
+                int atsCategory = int.Parse(atsInput);
 
-                    nurse.PerformTriage();
-                    TriageAssessment triage = new TriageAssessment(
-                        "T001",
-                        atsCategory,
-                        symptoms,
-                        vitals,
-                        DateTime.Now.ToString("dd/MM/yyyy"));
-                    triage.AssignATSCategory();
-                    break;
+                // Business rule: ATS category must be between 1 and 5
+                if (atsCategory < 1 || atsCategory > 5)
+                {
+                  Console.WriteLine("Invalid ATS Category. Must be between 1 and 5.");
+                  break;
+                }
+
+                nurse.PerformTriage();
+                TriageAssessment triage = new TriageAssessment(
+                "T001",
+                atsCategory,
+                symptoms,
+                vitals,
+                DateTime.Now.ToString("dd/MM/yyyy"));
+                triage.AssignATSCategory();
+                break;
 
                 case "4":
                 Console.WriteLine("\n=== ALLOCATE BED ===");
