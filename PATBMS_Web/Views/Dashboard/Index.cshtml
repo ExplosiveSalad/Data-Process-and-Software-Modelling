@@ -1,0 +1,126 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    var role = ViewBag.UserRole as string ?? "";
+}
+
+<div class="page-header">
+    <div class="page-title">Dashboard</div>
+    <div class="page-subtitle">
+        Waitakere Hospital — Patient Admission, Triage and Bed Management System
+    </div>
+</div>
+
+<!-- Stats Row -->
+<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+    <div class="stat-card">
+        <div class="stat-number">@ViewBag.TotalPatients</div>
+        <div class="stat-label">Total Patients</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number" style="color: var(--accent-green);">@ViewBag.AvailableBeds</div>
+        <div class="stat-label">Available Beds</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number" style="color: var(--accent-red);">@ViewBag.OccupiedBeds</div>
+        <div class="stat-label">Occupied Beds</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number" style="color: var(--accent-orange);">@ViewBag.OccupancyRate%</div>
+        <div class="stat-label">Occupancy Rate</div>
+    </div>
+</div>
+
+<!-- Quick Actions based on role -->
+<div class="card" style="margin-bottom: 24px;">
+    <div class="card-header">Quick Actions</div>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+
+        @if (role == "admin")
+        {
+            <a href="/Patient/Register" class="btn-primary">Register Patient</a>
+            <a href="/Patient/Search" class="btn-primary">Search by NHI</a>
+        }
+
+        @if (role == "nurse")
+        {
+            <a href="/Triage/Index" class="btn-primary">Perform Triage</a>
+            <a href="/Bed/Dashboard" class="btn-primary">Bed Dashboard</a>
+            <a href="/Handover/Create" class="btn-primary">Create Handover</a>
+            <a href="/Discharge/Index" class="btn-primary">Record Discharge</a>
+        }
+
+        @if (role == "doctor")
+        {
+            <a href="/Bed/Dashboard" class="btn-primary">Bed Dashboard</a>
+            <a href="/Bed/Allocate" class="btn-primary">Allocate Bed</a>
+            <a href="/Triage/Review" class="btn-primary">Review Triage</a>
+        }
+
+        @if (role == "management")
+        {
+            <a href="/Bed/Dashboard" class="btn-primary">Bed Dashboard</a>
+            <a href="/Notification/Index" class="btn-primary">View Alerts</a>
+        }
+
+        @if (role == "allied")
+        {
+            <a href="/Discharge/Confirm" class="btn-primary">Confirm Discharge</a>
+        }
+
+    </div>
+</div>
+
+<!-- Ward Overview -->
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+
+    <div class="card">
+        <div class="card-header">Ward Overview</div>
+        @if (ViewBag.Wards != null)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Ward</th>
+                        <th>Specialty</th>
+                        <th>Total Beds</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ward in ViewBag.Wards)
+                    {
+                        <tr>
+                            <td>@ward.WardName</td>
+                            <td>@ward.Specialty</td>
+                            <td>@ward.TotalBeds</td>
+                            <td>
+                                <span style="color: var(--accent-green); font-size: 12px;">
+                                    ● Active
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+
+    <div class="card">
+        <div class="card-header">Recent Patients</div>
+        @if (ViewBag.RecentPatients != null)
+        {
+            @foreach (var patient in ViewBag.RecentPatients)
+            {
+                <div style="padding: 10px 0; border-bottom: 1px solid var(--border-color);">
+                    <div style="font-size: 13px; color: var(--text-primary);">
+                        @patient.Name
+                    </div>
+                    <div style="font-size: 11px; color: var(--text-secondary);">
+                        NHI: @patient.NHINumber
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+</div>

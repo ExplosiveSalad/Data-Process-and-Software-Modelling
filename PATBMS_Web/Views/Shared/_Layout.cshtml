@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PATBMS — @ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <nav class="navbar">
+        <a class="navbar-brand" href="/">
+            PATBMS <span>Waitakere Hospital</span>
+        </a>
+        <div>
+            @if (Context.Session.GetString("UserName") != null)
+            {
+                <span style="color: var(--text-secondary); font-size: 13px; margin-right: 16px;">
+                    @Context.Session.GetString("UserName")
+                    (@Context.Session.GetString("UserRole"))
+                </span>
+                <a href="/Account/Logout" class="btn-primary">Logout</a>
+            }
+        </div>
+    </nav>
+
+    <div class="container">
+        @RenderBody()
+    </div>
+
+    <script src="~/js/site.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

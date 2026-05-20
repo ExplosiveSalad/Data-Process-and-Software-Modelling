@@ -1,0 +1,141 @@
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PATBMS — Login</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: var(--bg-primary);
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 24px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .login-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-teal);
+            letter-spacing: 2px;
+        }
+
+        .login-subtitle {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .login-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 32px;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--accent-teal);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+
+        .btn-login:hover {
+            background-color: #009d91;
+        }
+
+        .demo-credentials {
+            margin-top: 24px;
+            padding: 16px;
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .demo-title {
+            color: var(--text-secondary);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .demo-item {
+            color: var(--text-secondary);
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .demo-item span {
+            color: var(--accent-teal);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="login-title">PATBMS</div>
+            <div class="login-subtitle">Waitakere Hospital — Patient Admission, Triage and Bed Management</div>
+        </div>
+
+        <div class="login-card">
+            <h2 style="font-size: 18px; margin-bottom: 24px; color: var(--text-primary);">
+                Sign In
+            </h2>
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger">@ViewBag.Error</div>
+            }
+
+            <form method="post">
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" name="email" class="form-control" 
+                           placeholder="Enter your email" required />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" 
+                           placeholder="Enter your password" required />
+                </div>
+
+                <button type="submit" class="btn-login">Sign In</button>
+            </form>
+
+            <div class="demo-credentials">
+                <div class="demo-title">Demo Credentials</div>
+                <div class="demo-item">Doctor: <span>smith@waitakere.nz</span> / password123</div>
+                <div class="demo-item">Nurse: <span>jane@waitakere.nz</span> / password123</div>
+                <div class="demo-item">Admin: <span>bob@waitakere.nz</span> / password123</div>
+                <div class="demo-item">Management: <span>baker@waitakere.nz</span> / password123</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
