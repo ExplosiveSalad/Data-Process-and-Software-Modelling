@@ -47,6 +47,7 @@
             <a href="/Bed/Dashboard" class="btn-primary">Bed Dashboard</a>
             <a href="/Handover/Create" class="btn-primary">Create Handover</a>
             <a href="/Discharge/Index" class="btn-primary">Record Discharge</a>
+            <a href="/Notification/Index" class="btn-primary">View Alerts</a>
         }
 
         @if (role == "doctor")
@@ -67,6 +68,10 @@
             <a href="/Discharge/Confirm" class="btn-primary">Confirm Discharge</a>
         }
 
+        <!-- All roles see general notifications -->
+        <a href="/Notification/Index" style="margin-left: auto;" class="btn-warning">
+            View Notifications
+        </a>
     </div>
 </div>
 

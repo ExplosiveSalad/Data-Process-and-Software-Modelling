@@ -1,0 +1,69 @@
+@{
+    ViewData["Title"] = "Search Patient";
+    @await Html.PartialAsync("_BackButton")
+}
+
+<div class="page-header">
+    <div class="page-title">Search Patient by NHI</div>
+    <div class="page-subtitle">Find a patient record using their NHI number</div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+
+    <div class="card">
+        <div class="card-header">NHI Search</div>
+        <form method="post">
+            <div class="form-group">
+                <label class="form-label">NHI Number</label>
+                <input type="text" name="nhiNumber" class="form-control"
+                       placeholder="e.g. NHI001" required />
+            </div>
+            <button type="submit" class="btn-primary">Search</button>
+        </form>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger" style="margin-top: 16px;">
+                @ViewBag.Error
+            </div>
+        }
+    </div>
+
+    @if (ViewBag.Patient != null)
+    {
+        <div class="card">
+            <div class="card-header">Patient Found</div>
+            <table class="table">
+                <tr>
+                    <td style="color: var(--text-secondary);">Patient ID</td>
+                    <td>@ViewBag.Patient.PatientID</td>
+                </tr>
+                <tr>
+                    <td style="color: var(--text-secondary);">NHI Number</td>
+                    <td>@ViewBag.Patient.NHINumber</td>
+                </tr>
+                <tr>
+                    <td style="color: var(--text-secondary);">Full Name</td>
+                    <td>@ViewBag.Patient.Name</td>
+                </tr>
+                <tr>
+                    <td style="color: var(--text-secondary);">Date of Birth</td>
+                    <td>@ViewBag.Patient.DateOfBirth</td>
+                </tr>
+                <tr>
+                    <td style="color: var(--text-secondary);">Address</td>
+                    <td>@ViewBag.Patient.Address</td>
+                </tr>
+                <tr>
+                    <td style="color: var(--text-secondary);">Phone</td>
+                    <td>@ViewBag.Patient.PhoneNumber</td>
+                </tr>
+                <tr>
+                    <td style="color: var(--text-secondary);">Status</td>
+                    <td>@ViewBag.Patient.AdmissionStatus</td>
+                </tr>
+            </table>
+        </div>
+    }
+
+</div>

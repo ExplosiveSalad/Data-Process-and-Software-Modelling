@@ -5,13 +5,19 @@ namespace PATBMS_Web.Models
 {
     public class Patient
     {
-        public Patient() {}
+        public Patient()
+        {
+            admissionStatus = "Registered";
+            bedID = null;
+        }
         private string patientID;
         private string nhiNumber;
         private string name;
         private string dateOfBirth;
         private string address;
         private string phoneNumber;
+        private string admissionStatus;
+        private string bedID;
 
         [Key]
         public string PatientID
@@ -45,6 +51,18 @@ namespace PATBMS_Web.Models
             set{phoneNumber = value;}
         }
 
+        public string AdmissionStatus
+        {
+            get { return admissionStatus; }
+            set { admissionStatus = value; }
+        }
+
+        public string BedID
+        {
+            get { return bedID; }
+            set { bedID = value; }
+        }
+
         public Patient(string patientID, string nhiNumber, string name, string dateOfBirth, string address, string phoneNumber)
         {
             this.patientID = patientID;
@@ -53,6 +71,7 @@ namespace PATBMS_Web.Models
             this.dateOfBirth = dateOfBirth;
             this.address = address;
             this.phoneNumber = phoneNumber;
+            this.admissionStatus  = "Registered";
         }
 
         public void GetRecord()
@@ -64,6 +83,7 @@ namespace PATBMS_Web.Models
             Console.WriteLine($"Date of Birth: {dateOfBirth}");
             Console.WriteLine($"Address: {address}");
             Console.WriteLine($"Phone Number: {phoneNumber}");
+            Console.WriteLine($"Admission  Status: {admissionStatus}");
         }
     }
 }

@@ -32,8 +32,24 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/yaaco/PATBMS_Web/Views/Bed/Allocate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmVkXEFsbG9jYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/yaaco/PATBMS_Web/Views/Bed/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmVkXERhc2hib2FyZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/yaaco/PATBMS_Web/Views/Dashboard/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/yaaco/PATBMS_Web/Views/Discharge/Confirm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGlzY2hhcmdlXENvbmZpcm0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/yaaco/PATBMS_Web/Views/Discharge/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGlzY2hhcmdlXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/yaaco/PATBMS_Web/Views/Home/Index.cshtml]
@@ -44,12 +60,36 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/yaaco/PATBMS_Web/Views/Patient/List.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxMaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/yaaco/PATBMS_Web/Views/Patient/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/yaaco/PATBMS_Web/Views/Patient/Search.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxTZWFyY2guY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/yaaco/PATBMS_Web/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/yaaco/PATBMS_Web/Views/Shared/_BackButton.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9CYWNrQnV0dG9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/yaaco/PATBMS_Web/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/yaaco/PATBMS_Web/Views/Triage/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJpYWdlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/yaaco/PATBMS_Web/Views/Triage/Review.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJpYWdlXFJldmlldy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/yaaco/PATBMS_Web/Views/_ViewImports.cshtml]

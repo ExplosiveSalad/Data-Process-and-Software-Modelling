@@ -1,0 +1,96 @@
+@model List<PATBMS_Web.Models.Patient>
+
+@{
+    ViewData["Title"] = "Record Discharge";
+}
+
+@await Html.PartialAsync("_BackButton")
+
+<div class="page-header">
+    <div class="page-title">Record Patient Discharge</div>
+    <div class="page-subtitle">
+        Discharge admitted patients and update bed status
+    </div>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<div class="card">
+    <div class="card-header">Admitted Patients</div>
+
+    @if (Model.Count == 0)
+    {
+        <p style="color: var(--text-secondary); padding: 16px 0;">
+            No admitted patients to discharge.
+        </p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>NHI</th>
+                    <th>Status</th>
+                    <th>Discharge Reason</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var patient in Model)
+                {
+                    <tr>
+                        <td>@patient.Name</td>
+                        <td>@patient.NHINumber</td>
+                        <td>
+                            <span style="color: var(--accent-orange);">
+                                 @patient.AdmissionStatus
+                            </span>
+                        </td>
+                        <td>
+                            <form method="post" 
+                                  action="/Discharge/Record"
+                                  style="display: flex; gap: 8px; align-items: center;">
+                                <input type="hidden" 
+                                       name="patientID" 
+                                       value="@patient.PatientID" />
+                                <select name="dischargeReason" 
+                                        class="form-control" 
+                                        style="width: 200px;"
+                                        required>
+                                    <option value="">-- Select Reason --</option>
+                                    <option value="Treatment Complete">
+                                        Treatment Complete
+                                    </option>
+                                    <option value="Transferred to Another Facility">
+                                        Transferred
+                                    </option>
+                                    <option value="Patient Request">
+                                        Patient Request
+                                    </option>
+                                    <option value="Referred to Outpatient">
+                                        Outpatient Referral
+                                    </option>
+                                    <option value="Deceased">Deceased</option>
+                                </select>
+                                <button type="submit" class="btn-danger"
+                                        style="padding: 6px 12px; 
+                                               font-size: 12px;
+                                               white-space: nowrap;">
+                                    Discharge
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

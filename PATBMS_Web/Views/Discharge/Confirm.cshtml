@@ -1,0 +1,71 @@
+@model List<PATBMS_Web.Models.Patient>
+
+@{
+    ViewData["Title"] = "Confirm Discharge Readiness";
+}
+
+@await Html.PartialAsync("_BackButton")
+
+<div class="page-header">
+    <div class="page-title">Confirm Discharge Readiness</div>
+    <div class="page-subtitle">
+        Allied Health confirmation of patient discharge readiness
+    </div>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<div class="card">
+    <div class="card-header">Admitted Patients</div>
+
+    @if (Model.Count == 0)
+    {
+        <p style="color: var(--text-secondary); padding: 16px 0;">
+            No admitted patients requiring discharge confirmation.
+        </p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>NHI</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var patient in Model)
+                {
+                    <tr>
+                        <td>@patient.Name</td>
+                        <td>@patient.NHINumber</td>
+                        <td>
+                            <span style="color: var(--accent-orange);">
+                                ● @patient.AdmissionStatus
+                            </span>
+                        </td>
+                        <td>
+                            <form method="post" 
+                                  action="/Discharge/ConfirmReadiness" 
+                                  style="display: inline;">
+                                <input type="hidden" 
+                                       name="patientID" 
+                                       value="@patient.PatientID" />
+                                <button type="submit" 
+                                        class="btn-success"
+                                        style="padding: 4px 12px; font-size: 12px;">
+                                    Confirm Ready
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

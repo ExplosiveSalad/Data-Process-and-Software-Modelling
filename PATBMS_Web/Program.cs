@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PATBMS_Web.Data;
+using PATBMS_Web.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -44,6 +45,14 @@ using (var scope = app.Services.CreateScope())
         .GetRequiredService<ApplicationDbContext>();
     context.Database.EnsureCreated();
     DbSeeder.Seed(context);
+
+    // Set up BedManager Singleton with wards from database
+    var bedManager = BedManager.GetInstance();
+    var wards = context.Wards.ToList();
+    foreach (var ward in wards)
+    {
+        bedManager.AddWard(ward);
+    }
 }
 
 app.Run();

@@ -1,0 +1,55 @@
+@model List<PATBMS_Web.Models.TriageAssessment>
+
+@{
+    ViewData["Title"] = "Review Triage";
+}
+
+@await Html.PartialAsync("_BackButton")
+
+<div class="page-header">
+    <div class="page-title">Review Triage Outcomes</div>
+    <div class="page-subtitle">
+        Review and authorise patient triage assessments
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">Triage Assessments</div>
+
+    @if (Model.Count == 0)
+    {
+        <p style="color: var(--text-secondary); padding: 16px 0;">
+            No triage assessments recorded yet.
+        </p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Triage ID</th>
+                    <th>ATS Category</th>
+                    <th>Symptoms</th>
+                    <th>Vitals</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var triage in Model)
+                {
+                    <tr>
+                        <td>@triage.TriageID</td>
+                        <td>
+                            <span class="ats-@triage.ATSCategory">
+                                ATS @triage.ATSCategory
+                            </span>
+                        </td>
+                        <td>@triage.Symptoms</td>
+                        <td>@triage.Vitals</td>
+                        <td>@triage.AssessmentDate</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

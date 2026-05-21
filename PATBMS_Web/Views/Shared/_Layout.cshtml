@@ -8,17 +8,61 @@
 </head>
 <body>
     <nav class="navbar">
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand" href="/Dashboard/Index">
             PATBMS <span>Waitakere Hospital</span>
         </a>
-        <div>
-            @if (Context.Session.GetString("UserName") != null)
+
+        <div style="display: flex; align-items: center; gap: 8px;">
+            @if (Context.Session.GetString("UserID") != null)
             {
-                <span style="color: var(--text-secondary); font-size: 13px; margin-right: 16px;">
+                var role = Context.Session.GetString("UserRole");
+
+                <a href="/Dashboard/Index" class="nav-link">Dashboard</a>
+
+                @if (role == "admin")
+                {
+                    <a href="/Patient/Register" class="nav-link">Register Patient</a>
+                    <a href="/Patient/Search" class="nav-link">Search NHI</a>
+                    <a href="/Patient/List" class="nav-link">Patient List</a>
+                }
+
+                @if (role == "nurse")
+                {
+                    <a href="/Patient/List" class="nav-link">Patients</a>
+                    <a href="/Triage/Index" class="nav-link">Triage</a>
+                    <a href="/Bed/Dashboard" class="nav-link">Bed Dashboard</a>
+                    <a href="/Handover/Create" class="nav-link">Handover</a>
+                    <a href="/Discharge/Index" class="nav-link">Discharge</a>
+                    <a href="/Notification/Index" class="nav-link">Alerts</a>
+                }
+
+                @if (role == "doctor")
+                {
+                    <a href="/Patient/List" class="nav-link">Patients</a>
+                    <a href="/Triage/Review" class="nav-link">Review Triage</a>
+                    <a href="/Bed/Dashboard" class="nav-link">Bed Dashboard</a>
+                    <a href="/Bed/Allocate" class="nav-link">Allocate Bed</a>
+                }
+
+                @if (role == "management")
+                {
+                    <a href="/Patient/List" class="nav-link">Patients</a>
+                    <a href="/Bed/Dashboard" class="nav-link">Bed Dashboard</a>
+                    <a href="/Notification/Index" class="nav-link">Alerts</a>
+                }
+
+                @if (role == "allied")
+                {
+                    <a href="/Patient/List" class="nav-link">Patients</a>
+                    <a href="/Discharge/Confirm" class="nav-link">Confirm Discharge</a>
+                }
+
+                <span style="color: var(--text-secondary); font-size: 12px; margin-left: 8px;">
                     @Context.Session.GetString("UserName")
-                    (@Context.Session.GetString("UserRole"))
                 </span>
-                <a href="/Account/Logout" class="btn-primary">Logout</a>
+
+                <a href="/Account/Logout" class="btn-primary"
+                   style="margin-left: 8px;">Logout</a>
             }
         </div>
     </nav>

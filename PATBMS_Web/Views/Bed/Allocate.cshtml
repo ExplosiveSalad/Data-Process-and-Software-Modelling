@@ -1,0 +1,90 @@
+@{
+    ViewData["Title"] = "Allocate Bed";
+}
+
+@await Html.PartialAsync("_BackButton")
+
+<div class="page-header">
+    <div class="page-title">Allocate Bed</div>
+    <div class="page-subtitle">
+        Assign a bed to a triaged patient using the allocation strategy
+    </div>
+</div>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+
+    <div class="card">
+        <div class="card-header">Bed Allocation Form</div>
+        <form method="post">
+
+            <div class="form-group">
+                <label class="form-label">Select Patient</label>
+                <select name="patientID" class="form-control" required>
+                    <option value="">-- Select Triaged Patient --</option>
+                    @if (ViewBag.Patients != null)
+                    {
+                        @foreach (var patient in ViewBag.Patients)
+                        {
+                            <option value="@patient.PatientID">
+                                @patient.Name (NHI: @patient.NHINumber)
+                            </option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">ATS Category</label>
+                <select name="atsCategory" class="form-control" required>
+                    <option value="">-- Select ATS Category --</option>
+                    <option value="1">ATS 1 — Immediately Life Threatening</option>
+                    <option value="2">ATS 2 — Imminently Life Threatening</option>
+                    <option value="3">ATS 3 — Potentially Life Threatening</option>
+                    <option value="4">ATS 4 — Potentially Serious</option>
+                    <option value="5">ATS 5 — Less Urgent</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-primary">Allocate Bed</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <div class="card-header">Allocation Strategy</div>
+        <div style="color: var(--text-secondary); 
+                    font-size: 13px; 
+                    line-height: 1.8;">
+            <p style="margin-bottom: 12px;">
+                The system automatically selects an allocation 
+                strategy based on the patient's ATS category.
+            </p>
+            <div style="padding: 12px; 
+                        background-color: var(--bg-secondary); 
+                        border-radius: 8px;
+                        border-left: 3px solid var(--accent-red);
+                        margin-bottom: 12px;">
+                <strong style="color: var(--accent-red);">
+                    Urgent Strategy (ATS 1-2)
+                </strong><br/>
+                Prioritises High Dependency beds for 
+                immediately or imminently life threatening cases.
+            </div>
+            <div style="padding: 12px; 
+                        background-color: var(--bg-secondary); 
+                        border-radius: 8px;
+                        border-left: 3px solid var(--accent-blue);">
+                <strong style="color: var(--accent-blue);">
+                    Standard Strategy (ATS 3-5)
+                </strong><br/>
+                Allocates first available standard bed 
+                for less critical cases.
+            </div>
+        </div>
+    </div>
+
+</div>

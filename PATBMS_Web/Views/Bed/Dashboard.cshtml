@@ -1,0 +1,131 @@
+@{
+    ViewData["Title"] = "Bed Dashboard";
+}
+
+@await Html.PartialAsync("_BackButton")
+
+<div class="page-header">
+    <div class="page-title">Bed Availability Dashboard</div>
+    <div class="page-subtitle">
+        Real-time bed status across all wards — Waitakere Hospital
+    </div>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<!-- Stats Row -->
+<div style="display: grid; grid-template-columns: repeat(4, 1fr); 
+            gap: 16px; margin-bottom: 24px;">
+    <div class="stat-card">
+        <div class="stat-number">@ViewBag.TotalBeds</div>
+        <div class="stat-label">Total Beds</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number" style="color: var(--accent-green);">
+            @ViewBag.AvailableBeds
+        </div>
+        <div class="stat-label">Available</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number" style="color: var(--accent-red);">
+            @ViewBag.OccupiedBeds
+        </div>
+        <div class="stat-label">Occupied</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number" style="color: var(--accent-orange);">
+            @ViewBag.AllocatedBeds
+        </div>
+        <div class="stat-label">Allocated</div>
+    </div>
+</div>
+
+<!-- Legend -->
+<div class="card" style="margin-bottom: 24px;">
+    <div style="display: flex; gap: 20px; align-items: center;">
+        <span style="font-size: 12px; color: var(--text-secondary);">
+            Legend:
+        </span>
+        <span class="bed-cell bed-available" 
+              style="padding: 4px 12px; border-radius: 6px;">
+            Available
+        </span>
+        <span class="bed-cell bed-occupied" 
+              style="padding: 4px 12px; border-radius: 6px;">
+            Occupied
+        </span>
+        <span class="bed-cell bed-allocated" 
+              style="padding: 4px 12px; border-radius: 6px;">
+            Allocated
+        </span>
+        <span class="bed-cell bed-pending" 
+              style="padding: 4px 12px; border-radius: 6px;">
+            Pending Discharge
+        </span>
+
+        @if (Context.Session.GetString("UserRole") == "doctor" || 
+             Context.Session.GetString("UserRole") == "nurse")
+        {
+            <a href="/Bed/Allocate" 
+               class="btn-primary" 
+               style="margin-left: auto;">
+                Allocate Bed
+            </a>
+        }
+    </div>
+</div>
+
+<!-- Ward Bed Grids -->
+@if (ViewBag.Wards != null)
+{
+    @foreach (var ward in ViewBag.Wards)
+    {
+        var wardBeds = ((List<PATBMS_Web.Models.Bed>)ViewBag.Beds)
+            .Where(b => b.BedID.StartsWith("B0") || 
+                        b.BedID.StartsWith("B1") || 
+                        b.BedID.StartsWith("B2"))
+            .ToList();
+
+        <div class="card" style="margin-bottom: 20px;">
+            <div class="card-header">
+                @ward.WardName
+                <span style="color: var(--text-secondary); 
+                             font-size: 12px; 
+                             font-weight: 400; 
+                             margin-left: 8px;">
+                    @ward.Specialty
+                </span>
+            </div>
+
+            <div class="bed-grid">
+                @foreach (var bed in (List<PATBMS_Web.Models.Bed>)ViewBag.Beds)
+                {
+                    var bedClass = bed.Status switch
+                    {
+                        "Available" => "bed-available",
+                        "Occupied" => "bed-occupied",
+                        "Allocated" => "bed-allocated",
+                        "Pending Discharge" => "bed-pending",
+                        _ => "bed-available"
+                    };
+
+                    <div class="bed-cell @bedClass">
+                        <div>@bed.BedID</div>
+                        <div style="font-size: 10px; margin-top: 2px;">
+                            @bed.BedType
+                        </div>
+                        <div style="font-size: 10px;">@bed.Status</div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}

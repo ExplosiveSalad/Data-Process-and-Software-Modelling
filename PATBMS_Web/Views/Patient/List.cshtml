@@ -1,0 +1,55 @@
+@model List<PATBMS_Web.Models.Patient>
+
+@{
+    ViewData["Title"] = "Patient List";
+    @await Html.PartialAsync("_BackButton")
+}
+
+<div class="page-header">
+    <div class="page-title">Patient List</div>
+    <div class="page-subtitle">All registered patients in the system</div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        Registered Patients
+        <a href="/Patient/Register" 
+           style="float: right;" 
+           class="btn-primary">Register New Patient</a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Patient ID</th>
+                <th>NHI Number</th>
+                <th>Name</th>
+                <th>Date of Birth</th>
+                <th>Phone</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var patient in Model)
+            {
+                <tr>
+                    <td>@patient.PatientID</td>
+                    <td>@patient.NHINumber</td>
+                    <td>@patient.Name</td>
+                    <td>@patient.DateOfBirth</td>
+                    <td>@patient.PhoneNumber</td>
+                    <td>
+                        @if (patient.AdmissionStatus == "Admitted")
+                        {
+                            <span style="color: var(--accent-red);">● Admitted</span>
+                        }
+                        else
+                        {
+                            <span style="color: var(--accent-green);">● Registered</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

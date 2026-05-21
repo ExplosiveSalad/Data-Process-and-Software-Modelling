@@ -314,6 +314,21 @@ body {
     margin-top: 4px;
 }
 
+.back-link {
+    color: var(--text-secondary);
+    font-size: 13px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 16px;
+    transition: color 0.2s;
+}
+
+.back-link:hover {
+    color: var(--text-primary);
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
     width: 6px;

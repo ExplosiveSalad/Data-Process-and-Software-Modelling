@@ -1,0 +1,121 @@
+@model List<PATBMS_Web.Models.Patient>
+
+@{
+    ViewData["Title"] = "Patient Triage";
+}
+
+@await Html.PartialAsync("_BackButton")
+
+<div class="page-header">
+    <div class="page-title">Perform Patient Triage</div>
+    <div class="page-subtitle">
+        Assign an Australasian Triage Scale (ATS) category to a patient
+    </div>
+</div>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+
+    <div class="card">
+        <div class="card-header">Triage Assessment</div>
+        <form method="post" action="/Triage/Perform">
+
+            <div class="form-group">
+                <label class="form-label">Select Patient</label>
+                <select name="patientID" class="form-control" required>
+                    <option value="">-- Select Patient --</option>
+                    @foreach (var patient in Model)
+                    {
+                        <option value="@patient.PatientID">
+                            @patient.Name (NHI: @patient.NHINumber)
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Symptoms</label>
+                <textarea name="symptoms" class="form-control" 
+                          rows="3" placeholder="Describe presenting symptoms" 
+                          required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Vitals</label>
+                <input type="text" name="vitals" class="form-control"
+                       placeholder="e.g. BP 120/80, HR 72, Temp 37.2" required />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">ATS Category (1-5)</label>
+                <select name="atsCategory" class="form-control" required>
+                    <option value="">-- Select ATS Category --</option>
+                    <option value="1">ATS 1 — Immediately Life Threatening</option>
+                    <option value="2">ATS 2 — Imminently Life Threatening</option>
+                    <option value="3">ATS 3 — Potentially Life Threatening</option>
+                    <option value="4">ATS 4 — Potentially Serious</option>
+                    <option value="5">ATS 5 — Less Urgent</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-primary">Submit Triage</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <div class="card-header">ATS Category Reference</div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="ats-1">ATS 1</span>
+                <span style="color: var(--text-secondary); font-size: 13px;">
+                    Immediately Life Threatening — Resuscitation
+                </span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="ats-2">ATS 2</span>
+                <span style="color: var(--text-secondary); font-size: 13px;">
+                    Imminently Life Threatening — Emergency
+                </span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="ats-3">ATS 3</span>
+                <span style="color: var(--text-secondary); font-size: 13px;">
+                    Potentially Life Threatening — Urgent
+                </span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="ats-4">ATS 4</span>
+                <span style="color: var(--text-secondary); font-size: 13px;">
+                    Potentially Serious — Semi-Urgent
+                </span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="ats-5">ATS 5</span>
+                <span style="color: var(--text-secondary); font-size: 13px;">
+                    Less Urgent — Non-Urgent
+                </span>
+            </div>
+        </div>
+
+        <div style="margin-top: 20px; padding: 12px; 
+                    background-color: var(--bg-secondary); 
+                    border-radius: 8px;
+                    border: 1px solid var(--border-color);">
+            <div style="color: var(--text-secondary); font-size: 12px;">
+                <strong style="color: var(--accent-orange);">Business Rule</strong> — 
+                ATS category must be between 1 and 5. 
+                Categories 1 and 2 trigger urgent bed allocation strategy.
+            </div>
+        </div>
+    </div>
+
+</div>
