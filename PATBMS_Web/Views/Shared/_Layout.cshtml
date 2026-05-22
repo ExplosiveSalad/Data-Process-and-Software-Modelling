@@ -1,11 +1,13 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PATBMS — @ViewData["Title"]</title>
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
+
 <body>
     <nav class="navbar">
         <a class="navbar-brand" href="/Dashboard/Index">
@@ -24,6 +26,7 @@
                     <a href="/Patient/Register" class="nav-link">Register Patient</a>
                     <a href="/Patient/Search" class="nav-link">Search NHI</a>
                     <a href="/Patient/List" class="nav-link">Patient List</a>
+                    <a href="/Diagnosis/List" class="nav-link">Diagnosis Records</a>
                 }
 
                 @if (role == "nurse")
@@ -32,6 +35,7 @@
                     <a href="/Triage/Index" class="nav-link">Triage</a>
                     <a href="/Bed/Dashboard" class="nav-link">Bed Dashboard</a>
                     <a href="/Handover/Create" class="nav-link">Handover</a>
+                    <a href="/Handover/List" class="nav-link">Handover Records</a>
                     <a href="/Discharge/Index" class="nav-link">Discharge</a>
                     <a href="/Notification/Index" class="nav-link">Alerts</a>
                 }
@@ -42,6 +46,10 @@
                     <a href="/Triage/Review" class="nav-link">Review Triage</a>
                     <a href="/Bed/Dashboard" class="nav-link">Bed Dashboard</a>
                     <a href="/Bed/Allocate" class="nav-link">Allocate Bed</a>
+                    <a href="/Handover/Create" class="nav-link">Handover</a>
+                    <a href="/Handover/List" class="nav-link">Handover Records</a>
+                    <a href="/Diagnosis/Create" class="nav-link">Diagnosis</a>
+                    <a href="/Diagnosis/List" class="nav-link">Diagnosis Records</a>
                 }
 
                 @if (role == "management")
@@ -61,8 +69,7 @@
                     @Context.Session.GetString("UserName")
                 </span>
 
-                <a href="/Account/Logout" class="btn-primary"
-                   style="margin-left: 8px;">Logout</a>
+                <a href="/Account/Logout" class="btn-primary" style="margin-left: 8px;">Logout</a>
             }
         </div>
     </nav>
@@ -74,4 +81,5 @@
     <script src="~/js/site.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

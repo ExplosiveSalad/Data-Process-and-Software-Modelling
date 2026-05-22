@@ -3,6 +3,11 @@
     var role = ViewBag.UserRole as string ?? "";
 }
 
+<p style="color: red; font-size: 12px;">
+    Debug — Session Role: "@Context.Session.GetString("UserRole")" | 
+    ViewBag Role: "@ViewBag.UserRole"
+</p>
+
 <div class="page-header">
     <div class="page-title">Dashboard</div>
     <div class="page-subtitle">
@@ -39,19 +44,25 @@
         {
             <a href="/Patient/Register" class="btn-primary">Register Patient</a>
             <a href="/Patient/Search" class="btn-primary">Search by NHI</a>
+            <a href="/Patient/List" class="btn-primary">View Patient List</a>
+            <a href="/Diagnosis/List" class="btn-primary">View Diagnosis Record</a>
         }
 
         @if (role == "nurse")
         {
+            <a href="/Patient/List" class="btn-primary">View Patients</a>
             <a href="/Triage/Index" class="btn-primary">Perform Triage</a>
             <a href="/Bed/Dashboard" class="btn-primary">Bed Dashboard</a>
             <a href="/Handover/Create" class="btn-primary">Create Handover</a>
+            <a href="/Handover/List" class="btn-primary">View Handover Records</a>
             <a href="/Discharge/Index" class="btn-primary">Record Discharge</a>
             <a href="/Notification/Index" class="btn-primary">View Alerts</a>
         }
 
         @if (role == "doctor")
         {
+            <a href="/Patient/List" class="btn-primary">View Patients</a>
+            <a href="/Triage/Review" class="btn-primary">Review Triage</a>
             <a href="/Bed/Dashboard" class="btn-primary">Bed Dashboard</a>
             <a href="/Bed/Allocate" class="btn-primary">Allocate Bed</a>
             <a href="/Triage/Review" class="btn-primary">Review Triage</a>

@@ -1,0 +1,52 @@
+@model List<PATBMS_Web.Models.DiagnosisRecord>
+
+@{
+    ViewData["Title"] = "Diagnosis Records";
+}
+
+@await Html.PartialAsync("_BackButton")
+
+<div class="page-header">
+    <div class="page-title">Diagnosis Records</div>
+    <div class="page-subtitle">All recorded diagnoses and treatment plans</div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        Records
+        <a href="/Diagnosis/Create" 
+           style="float: right;" 
+           class="btn-primary">New Diagnosis</a>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <p style="color: var(--text-secondary); padding: 16px 0;">
+            No diagnosis records yet.
+        </p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Diagnosis</th>
+                    <th>Treatment Plan</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var d in Model)
+                {
+                    <tr>
+                        <td>@d.DiagnosisID</td>
+                        <td>@d.Diagnosis</td>
+                        <td>@d.TreatmentPlan</td>
+                        <td>@d.DateRecorded</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

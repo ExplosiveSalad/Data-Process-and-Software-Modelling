@@ -73,6 +73,10 @@ namespace PATBMS_Web.Controllers
             bedManager.NotifyObservers(
                 $"Patient {patient.Name} discharged. Bed now available.");
 
+            NotificationController.CreateNotification(
+            _context,
+            $"Patient {patient.Name} discharged. Bed now available.");
+
             _context.SaveChanges();
 
             TempData["Success"] =

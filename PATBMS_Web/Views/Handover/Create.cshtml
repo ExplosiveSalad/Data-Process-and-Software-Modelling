@@ -1,0 +1,111 @@
+@{
+    ViewData["Title"] = "Conduct Handover";
+}
+
+@await Html.PartialAsync("_BackButton")
+
+<div class="page-header">
+    <div class="page-title">Inter-Department Handover</div>
+    <div class="page-subtitle">
+        Send structured handover information to receiving department
+    </div>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+    <div class="card">
+        <div class="card-header">Handover Form</div>
+        <form method="post">
+            <div class="form-group">
+                <label class="form-label">Patient</label>
+                <select name="patientID" class="form-control" required>
+                    <option value="">-- Select Patient --</option>
+                    @foreach (var patient in ViewBag.Patients)
+                    {
+                        <option value="@patient.PatientID">
+                            @patient.Name (NHI: @patient.NHINumber)
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Sending Department</label>
+                <select name="sendingDepartment" class="form-control" required>
+                    <option value="">-- Select Department --</option>
+                    @foreach (var dept in ViewBag.Departments)
+                    {
+                        <option value="@dept">@dept</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Receiving Department</label>
+                <select name="receivingDepartment" class="form-control" required>
+                    <option value="">-- Select Department --</option>
+                    @foreach (var dept in ViewBag.Departments)
+                    {
+                        <option value="@dept">@dept</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Clinical Status</label>
+                <textarea name="clinicalStatus" class="form-control" 
+                          rows="2" required
+                          placeholder="Current clinical status"></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Outstanding Tasks</label>
+                <textarea name="outstandingTasks" class="form-control" 
+                          rows="2" required
+                          placeholder="Tasks requiring follow up"></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Special Needs</label>
+                <textarea name="specialNeeds" class="form-control" 
+                          rows="2"
+                          placeholder="Cultural needs, allergies, etc."></textarea>
+            </div>
+            <button type="submit" class="btn-primary">Send Handover</button>
+            <a href="/Handover/List" 
+               class="btn-primary" 
+               style="margin-left: 8px;">View All Handovers</a>
+        </form>
+    </div>
+
+    <div class="card">
+        <div class="card-header">Handover Guidelines</div>
+        <div style="color: var(--text-secondary); font-size: 13px; line-height: 1.8;">
+            <p style="margin-bottom: 12px;">
+                Structured handovers ensure continuity of care 
+                when patients are transferred between departments.
+            </p>
+            <div style="padding: 12px; background-color: var(--bg-secondary); 
+                        border-radius: 8px; margin-bottom: 8px;
+                        border-left: 3px solid var(--accent-teal);">
+                <strong style="color: var(--accent-teal);">Clinical Status</strong><br/>
+                Current condition, vital signs, and recent changes.
+            </div>
+            <div style="padding: 12px; background-color: var(--bg-secondary); 
+                        border-radius: 8px; margin-bottom: 8px;
+                        border-left: 3px solid var(--accent-orange);">
+                <strong style="color: var(--accent-orange);">Outstanding Tasks</strong><br/>
+                Pending tests, medications, or follow-up actions.
+            </div>
+            <div style="padding: 12px; background-color: var(--bg-secondary); 
+                        border-radius: 8px;
+                        border-left: 3px solid var(--accent-blue);">
+                <strong style="color: var(--accent-blue);">Special Needs</strong><br/>
+                Cultural requirements, allergies, or mobility needs.
+            </div>
+        </div>
+    </div>
+</div>

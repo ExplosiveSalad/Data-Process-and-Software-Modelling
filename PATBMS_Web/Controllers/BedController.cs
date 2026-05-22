@@ -142,6 +142,12 @@ namespace PATBMS_Web.Controllers
                 $"Bed {allocatedBed.BedID} allocated to {patient.Name}");
             bedManager.CheckOccupancyThreshold("W001");
 
+            // Save notification to database
+            NotificationController.CreateNotification(
+                _context,
+                $"Bed {allocatedBed.BedID} allocated to {patient.Name} " +
+                $"using {TempData["StrategyUsed"]}");
+
             TempData["Success"] =
                 $"Bed {allocatedBed.BedID} allocated to {patient.Name} " +
                 $"using {TempData["StrategyUsed"]}";

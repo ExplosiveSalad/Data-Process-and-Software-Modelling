@@ -1,0 +1,54 @@
+@model List<PATBMS_Web.Models.HandoverRecord>
+
+@{
+    ViewData["Title"] = "Handover Records";
+}
+
+@await Html.PartialAsync("_BackButton")
+
+<div class="page-header">
+    <div class="page-title">Handover Records</div>
+    <div class="page-subtitle">All inter-department handovers</div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        Handover History
+        <a href="/Handover/Create" 
+           style="float: right;" 
+           class="btn-primary">New Handover</a>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <p style="color: var(--text-secondary); padding: 16px 0;">
+            No handover records yet.
+        </p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Clinical Status</th>
+                    <th>Special Needs</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var h in Model)
+                {
+                    <tr>
+                        <td>@h.HandoverID</td>
+                        <td>@h.SendingDepartment</td>
+                        <td>@h.ReceivingDepartment</td>
+                        <td>@h.ClinicalStatus</td>
+                        <td>@h.SpecialNeeds</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

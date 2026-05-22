@@ -32,7 +32,7 @@ namespace PATBMS_Web.Controllers
 
         // POST: /Triage/Perform
         [HttpPost]
-        public IActionResult Perform(string patientID, string symptoms, 
+        public IActionResult Perform(string patientID, string symptoms,
             string vitals, int atsCategory)
         {
             if (HttpContext.Session.GetString("UserID") == null)
@@ -72,7 +72,11 @@ namespace PATBMS_Web.Controllers
             bedManager.NotifyObservers(
                 $"Patient {patient.Name} triaged with ATS Category {atsCategory}");
 
-            TempData["Success"] = 
+            NotificationController.CreateNotification(
+            _context,
+            $"Patient {patient.Name} triaged with ATS Category {atsCategory}");
+
+            TempData["Success"] =
                 $"Triage completed for {patient.Name}. ATS Category: {atsCategory}";
             return RedirectToAction("Index");
         }
