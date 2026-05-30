@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Notifications";
+    var currentUserID = ViewBag.CurrentUserID as string;
 }
 
 @await Html.PartialAsync("_BackButton")
@@ -22,7 +23,8 @@
     <div class="card-header">
         Notifications
         <span style="float: right; color: var(--text-secondary); font-size: 12px;">
-            @Model.Count(n => !n.IsAcknowledged) unacknowledged
+            @Model.Count(n => n.AcknowledgedBy != currentUserID && 
+                              !n.IsAcknowledged) unacknowledged
         </span>
     </div>
 
@@ -46,15 +48,25 @@
             <tbody>
                 @foreach (var n in Model)
                 {
-                    <tr style="@(n.IsAcknowledged ? "opacity: 0.5;" : "")">
+                    var acknowledgedByMe = n.AcknowledgedBy == currentUserID;
+                    
+                    <tr style="@(acknowledgedByMe ? "opacity: 0.5;" : "")">
                         <td style="white-space: nowrap;">@n.DateSent</td>
                         <td>@n.Message</td>
                         <td>
-                            @if (n.IsAcknowledged)
+                            @if (acknowledgedByMe)
                             {
                                 <span style="color: var(--accent-green); 
                                              font-size: 12px;">
-                                    ● Acknowledged
+                                    ● Acknowledged by you
+                                </span>
+                            }
+                            else if (n.IsAcknowledged && 
+                                     n.AcknowledgedBy != currentUserID)
+                            {
+                                <span style="color: var(--text-secondary); 
+                                             font-size: 12px;">
+                                    ● Acknowledged by others
                                 </span>
                             }
                             else
@@ -66,17 +78,17 @@
                             }
                         </td>
                         <td>
-                            @if (!n.IsAcknowledged)
+                            @if (!acknowledgedByMe)
                             {
-                                <form method="post" 
+                                <form method="post"
                                       action="/Notification/Acknowledge"
                                       style="display: inline;">
-                                    <input type="hidden" 
-                                           name="notificationID" 
+                                    <input type="hidden"
+                                           name="notificationID"
                                            value="@n.NotificationID" />
-                                    <button type="submit" 
+                                    <button type="submit"
                                             class="btn-success"
-                                            style="padding: 4px 12px; 
+                                            style="padding: 4px 12px;
                                                    font-size: 12px;">
                                         Acknowledge
                                     </button>

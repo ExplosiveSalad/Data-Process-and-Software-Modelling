@@ -178,5 +178,89 @@ public IActionResult Allocate(string patientID, int atsCategory)
 
     return RedirectToAction("Dashboard");
 }
+// GET: /Bed/SimulateCapacity
+public IActionResult SimulateCapacity()
+{
+    if (HttpContext.Session.GetString("UserID") == null)
+        return RedirectToAction("Login", "Account");
+
+    // Set all beds to Occupied except 2 per ward
+    var beds = _context.Beds.ToList();
+    var wardGroups = beds.GroupBy(b => b.WardID);
+
+    foreach (var wardGroup in wardGroups)
+    {
+        var wardBeds = wardGroup.ToList();
+        // Leave 1 bed available per ward, rest occupied
+        for (int i = 0; i < wardBeds.Count; i++)
+        {
+            if (i == 0)
+                wardBeds[i].Status = "Available";
+            else
+                wardBeds[i].Status = "Occupied";
+        }
     }
+
+    _context.SaveChanges();
+
+    // Trigger observer notification
+    var bedManager = BedManager.GetInstance();
+    var totalBeds = beds.Count;
+    var occupiedBeds = beds.Count(b => b.Status == "Occupied");
+    var occupancyRate = (float)occupiedBeds / totalBeds * 100;
+
+    bedManager.NotifyObservers(
+        $"CRITICAL: Hospital occupancy at {Math.Round(occupancyRate, 1)}% " +
+        $"— {occupiedBeds} of {totalBeds} beds occupied");
+
+    NotificationController.CreateNotification(
+        _context,
+        $"CAPACITY WARNING: Hospital occupancy at " +
+        $"{Math.Round(occupancyRate, 1)}% — " +
+        $"{occupiedBeds} of {totalBeds} beds occupied. " +
+        $"Only 1 bed available per ward.");
+
+    TempData["Success"] = 
+        $"Demo: Capacity simulated at {Math.Round(occupancyRate, 1)}% " +
+        $"occupancy. Check notifications for capacity alert.";
+
+    return RedirectToAction("Dashboard");
+}
+
+// GET: /Bed/ResetCapacity
+public IActionResult ResetCapacity()
+{
+    if (HttpContext.Session.GetString("UserID") == null)
+        return RedirectToAction("Login", "Account");
+
+    // Reset all beds to original seeded state
+    var beds = _context.Beds.ToList();
+
+    foreach (var bed in beds)
+    {
+        // Match original seeder states
+        if (bed.BedID == "B005" || bed.BedID == "B008" ||
+            bed.BedID == "B013" || bed.BedID == "B016" ||
+            bed.BedID == "B021" || bed.BedID == "B024")
+        {
+            bed.Status = "Occupied";
+        }
+        else
+        {
+            bed.Status = "Available";
+        }
+    }
+
+    _context.SaveChanges();
+
+    NotificationController.CreateNotification(
+        _context,
+        "Demo reset: Bed capacity returned to normal levels.");
+
+    TempData["Success"] = "Demo: Bed capacity reset to original state.";
+
+    return RedirectToAction("Dashboard");
+}
+    }
+ 
 }

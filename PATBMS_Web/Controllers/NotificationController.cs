@@ -23,6 +23,8 @@ namespace PATBMS_Web.Controllers
                 .OrderByDescending(n => n.DateSent)
                 .ToList();
 
+            ViewBag.CurrentUserID = HttpContext.Session.GetString("UserID");
+
             return View(notifications);
         }
 
@@ -32,10 +34,14 @@ namespace PATBMS_Web.Controllers
             if (HttpContext.Session.GetString("UserID") == null)
                 return RedirectToAction("Login", "Account");
 
+            var userID = HttpContext.Session.GetString("UserID");
+            var userName = HttpContext.Session.GetString("UserName");
+
             var notification = _context.Notifications.Find(notificationID);
             if (notification != null)
             {
                 notification.IsAcknowledged = true;
+                notification.AcknowledgedBy = userID;
                 _context.SaveChanges();
             }
 

@@ -10,6 +10,7 @@ namespace PATBMS_Web.Models
         private string message;
         private string dateSent;
         private bool isAcknowledged;
+        private string acknowledgedBy;
 
         [Key]
         public string NotificationID
@@ -32,6 +33,11 @@ namespace PATBMS_Web.Models
             get{return isAcknowledged;}
             set{isAcknowledged = value;}
         }
+        public string AcknowledgedBy
+        {
+            get { return acknowledgedBy; }
+            set {acknowledgedBy = value; }
+        }
 
         public Notification(string notificationID, string message, string dateSent, bool isAcknowledged)
         {
@@ -39,13 +45,7 @@ namespace PATBMS_Web.Models
             this.message = message;
             this.dateSent = dateSent;
             this.isAcknowledged = isAcknowledged;
-        }
-        public void SendNotification()
-        {
-            Console.WriteLine($"=== NEW NOTIFICATION ===");
-            Console.WriteLine($"Notification ID: {notificationID}");
-            Console.WriteLine($"Message: {message}");
-            Console.WriteLine($"Date Sent: {dateSent}");
+            this.acknowledgedBy = null;
         }
         public void Acknowledge()
         {
