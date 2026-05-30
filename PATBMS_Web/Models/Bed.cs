@@ -5,43 +5,52 @@ namespace PATBMS_Web.Models
 {
     public class Bed
     {
-    public Bed() {}
-    private string bedID;
-    private string status;
-    private string bedType;
+        public Bed() {}
 
-    [Key]
-    public string BedID
-    {
-        get {return bedID;}
-        set{bedID = value;}
-    }
-    public string Status
+        private string bedID;
+        private string status;
+        private string bedType;
+        private string wardID;
+
+        [Key]
+        public string BedID
         {
-            get{return status;}
-            set{status = value;}
+            get { return bedID; }
+            set { bedID = value; }
         }
-    public string BedType
+        public string Status
         {
-            get{return bedType;}
-            set{bedType = value;}
+            get { return status; }
+            set { status = value; }
         }
-    public Bed(string bedID, string status, string bedType)
+        public string BedType
+        {
+            get { return bedType; }
+            set { bedType = value; }
+        }
+        public string WardID
+        {
+            get { return wardID; }
+            set { wardID = value; }
+        }
+
+        public Bed(string bedID, string status, string bedType, string wardID)
         {
             this.bedID = bedID;
             this.status = status;
             this.bedType = bedType;
+            this.wardID = wardID;
         }
-        
-    public void MarkAsOccupied()
+
+        public void MarkAsOccupied()
         {
             status = "Occupied";
             Console.WriteLine("Bed has been marked as occupied.");
         }
-    public void MarkAsAvailable()
+        public void MarkAsAvailable()
         {
             status = "Available";
             Console.WriteLine("Bed has been marked as available.");
         }
-}
+    }
 }

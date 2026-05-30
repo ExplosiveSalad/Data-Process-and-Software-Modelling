@@ -1,98 +1,16 @@
-@{
-    ViewData["Title"] = "Bed Dashboard";
-}
-
-@await Html.PartialAsync("_BackButton")
-
-<div class="page-header">
-    <div class="page-title">Bed Availability Dashboard</div>
-    <div class="page-subtitle">
-        Real-time bed status across all wards — Waitakere Hospital
-    </div>
-</div>
-
-@if (TempData["Success"] != null)
-{
-    <div class="alert alert-success">@TempData["Success"]</div>
-}
-
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger">@TempData["Error"]</div>
-}
-
-<!-- Stats Row -->
-<div style="display: grid; grid-template-columns: repeat(4, 1fr); 
-            gap: 16px; margin-bottom: 24px;">
-    <div class="stat-card">
-        <div class="stat-number">@ViewBag.TotalBeds</div>
-        <div class="stat-label">Total Beds</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-number" style="color: var(--accent-green);">
-            @ViewBag.AvailableBeds
-        </div>
-        <div class="stat-label">Available</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-number" style="color: var(--accent-red);">
-            @ViewBag.OccupiedBeds
-        </div>
-        <div class="stat-label">Occupied</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-number" style="color: var(--accent-orange);">
-            @ViewBag.AllocatedBeds
-        </div>
-        <div class="stat-label">Allocated</div>
-    </div>
-</div>
-
-<!-- Legend -->
-<div class="card" style="margin-bottom: 24px;">
-    <div style="display: flex; gap: 20px; align-items: center;">
-        <span style="font-size: 12px; color: var(--text-secondary);">
-            Legend:
-        </span>
-        <span class="bed-cell bed-available" 
-              style="padding: 4px 12px; border-radius: 6px;">
-            Available
-        </span>
-        <span class="bed-cell bed-occupied" 
-              style="padding: 4px 12px; border-radius: 6px;">
-            Occupied
-        </span>
-        <span class="bed-cell bed-allocated" 
-              style="padding: 4px 12px; border-radius: 6px;">
-            Allocated
-        </span>
-        <span class="bed-cell bed-pending" 
-              style="padding: 4px 12px; border-radius: 6px;">
-            Pending Discharge
-        </span>
-
-        @if (Context.Session.GetString("UserRole") == "doctor" || 
-             Context.Session.GetString("UserRole") == "nurse")
-        {
-            <a href="/Bed/Allocate" 
-               class="btn-primary" 
-               style="margin-left: auto;">
-                Allocate Bed
-            </a>
-        }
-    </div>
-</div>
-
-<!-- Ward Bed Grids -->
 @if (ViewBag.Wards != null)
 {
     @foreach (var ward in ViewBag.Wards)
     {
         var wardBeds = ((List<PATBMS_Web.Models.Bed>)ViewBag.Beds)
-            .Where(b => b.BedID.StartsWith("B0") || 
-                        b.BedID.StartsWith("B1") || 
-                        b.BedID.StartsWith("B2"))
+            .Where(b => b.WardID == ward.WardID)
             .ToList();
+
+        var wardAvailable = wardBeds.Count(b => b.Status == "Available");
+        var wardOccupied = wardBeds.Count(b => b.Status == "Occupied");
+        var wardRate = wardBeds.Count > 0 
+            ? Math.Round((float)wardOccupied / wardBeds.Count * 100, 1) 
+            : 0;
 
         <div class="card" style="margin-bottom: 20px;">
             <div class="card-header">
@@ -103,29 +21,104 @@
                              margin-left: 8px;">
                     @ward.Specialty
                 </span>
+                <span style="float: right; font-size: 12px; 
+                             color: var(--text-secondary);">
+                    @wardAvailable available / @wardOccupied occupied 
+                    (@wardRate% occupancy)
+                </span>
             </div>
 
-            <div class="bed-grid">
-                @foreach (var bed in (List<PATBMS_Web.Models.Bed>)ViewBag.Beds)
-                {
-                    var bedClass = bed.Status switch
+            @if (!wardBeds.Any())
+            {
+                <p style="color: var(--text-secondary); padding: 12px 0;">
+                    No beds in this ward.
+                </p>
+            }
+            else
+            {
+                <div class="bed-grid">
+                    @foreach (var bed in wardBeds)
                     {
-                        "Available" => "bed-available",
-                        "Occupied" => "bed-occupied",
-                        "Allocated" => "bed-allocated",
-                        "Pending Discharge" => "bed-pending",
-                        _ => "bed-available"
-                    };
+                        var bedClass = bed.Status switch
+                        {
+                            "Available" => "bed-available",
+                            "Occupied" => "bed-occupied",
+                            "Allocated" => "bed-allocated",
+                            "Pending Discharge" => "bed-pending",
+                            _ => "bed-available"
+                        };
 
-                    <div class="bed-cell @bedClass">
-                        <div>@bed.BedID</div>
-                        <div style="font-size: 10px; margin-top: 2px;">
-                            @bed.BedType
+                        <div class="bed-cell @bedClass">
+                            <div>@bed.BedID</div>
+                            <div style="font-size: 10px; margin-top: 2px;">
+                                @bed.BedType
+                            </div>
+                            <div style="font-size: 10px;">@bed.Status</div>
                         </div>
-                        <div style="font-size: 10px;">@bed.Status</div>
-                    </div>
-                }
-            </div>
+                    }
+                </div>
+            }
         </div>
     }
+}
+
+<!-- Allocation Success Modal -->
+@if (TempData["Success"] != null)
+{
+    <div id="successModal" style="
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;">
+        <div style="
+            background: var(--bg-card);
+            border: 1px solid var(--accent-green);
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;">
+            <div style="font-size: 48px; margin-bottom: 16px;">✓</div>
+            <div style="
+                font-size: 18px;
+                font-weight: 700;
+                color: var(--accent-green);
+                margin-bottom: 12px;">
+                Bed Allocated Successfully
+            </div>
+            <div style="
+                color: var(--text-secondary);
+                font-size: 14px;
+                margin-bottom: 24px;">
+                @TempData["Success"]
+            </div>
+            <button onclick="closeModal()" style="
+                background: var(--accent-green);
+                border: none;
+                color: white;
+                padding: 10px 32px;
+                border-radius: 8px;
+                font-size: 14px;
+                font-weight: 600;
+                cursor: pointer;">
+                OK
+            </button>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        function closeModal() {
+            document.getElementById('successModal').style.display = 'none';
+        }
+        document.getElementById('successModal')
+            ?.addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+    </script>
 }
